@@ -1,0 +1,27 @@
+﻿<Window x:Class="Akropole.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Akropole"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="400" Height="250">
+    <Grid>
+        <Image Source="/Resource/scale_1200.png" />
+
+        <StackPanel VerticalAlignment="Bottom">
+            <GroupBox Header="Login">
+                <TextBox Name="loginTb"/>
+            </GroupBox>
+            
+            <GroupBox Header="Password">
+                <PasswordBox Name="passPb"/>
+            </GroupBox>
+
+            <Button x:Name="loginBtn"
+                    Content="Войти"
+                    Click="loginBtn_Click"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>

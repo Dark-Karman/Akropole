@@ -1,0 +1,52 @@
+﻿<Window x:Class="Akropole.Listwindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Akropole"
+        mc:Ignorable="d"
+        Title="Listwindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ListView x:Name="flatLV">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Адрес" DisplayMemberBinding="{Binding Building.adres}"/>
+                    <GridViewColumn Header="Этаж" DisplayMemberBinding="{Binding myFlor}"/>
+                    <GridViewColumn Header="Вид из окна" DisplayMemberBinding="{Binding ViewType.name}"/>
+                    <GridViewColumn Header="Кол-во комнат" DisplayMemberBinding="{Binding RoomsCount.name}"/>
+                    <GridViewColumn Header="Тип ванны" DisplayMemberBinding="{Binding BathType.name}"/>
+                    <GridViewColumn Header="Кол-во ванных комнат" DisplayMemberBinding="{Binding bathCount}"/>
+                    <GridViewColumn Header="Наличие кондиционеров" DisplayMemberBinding="{Binding condition}"/>
+                    <GridViewColumn Header="Кадастр" DisplayMemberBinding="{Binding cadastPrice}"/>
+                    <GridViewColumn Header="Рыночная стоимость" DisplayMemberBinding="{Binding marketPrice}"/>
+                    <GridViewColumn Header="Арендная стоимость" DisplayMemberBinding="{Binding rentPrice}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <GroupBox Header="Фильтр по кол-ву комнат">
+                <ComboBox SelectionChanged="filterRoomCom_SelectionChanged" Name="filterRoomCom" Width="280">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </GroupBox>
+            <GroupBox Header="Фильтр по цене">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="minPriceTb" Text="0"  Width="120" Margin="10 0"/>
+                    <TextBox x:Name="maxPriceTb" Text="0" Width="120" Margin="10 0" LostKeyboardFocus="maxPriceTb_LostKeyboardFocus" />
+                </StackPanel>
+            </GroupBox>
+            <Button x:Name="dropBut" Click="dropBut_Click" Content="Сбросить фильтры"/>
+            <TextBlock x:Name="countItems" VerticalAlignment="Center" Margin="20 0"/>
+        </StackPanel>
+    </Grid>
+</Window>

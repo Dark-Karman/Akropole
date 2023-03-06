@@ -1,0 +1,44 @@
+﻿<Window x:Class="Akropole.ListRentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Akropole"
+        mc:Ignorable="d"
+        Title="ListRentWindow" Height="auto" Width="auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ListView x:Name="flatLV" SelectionChanged="flatLV_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Адрес" DisplayMemberBinding="{Binding Building.adres}"/>
+                    <GridViewColumn Header="Этаж" DisplayMemberBinding="{Binding myFlor}"/>
+                    <!--<GridViewColumn Header="Вид из окна" DisplayMemberBinding="{Binding ViewType.name}"/>
+                    <GridViewColumn Header="Кол-во комнат" DisplayMemberBinding="{Binding RoomsCount.name}"/>
+                    <GridViewColumn Header="Тип ванны" DisplayMemberBinding="{Binding BathType.name}"/>
+                    <GridViewColumn Header="Кол-во ванных комнат" DisplayMemberBinding="{Binding bathCount}"/>
+                    <GridViewColumn Header="Наличие кондиционеров" DisplayMemberBinding="{Binding condition}"/>-->
+                    <GridViewColumn Header="Кадастр" DisplayMemberBinding="{Binding cadastPrice}"/>
+                    <GridViewColumn Header="Рыночная стоимость" DisplayMemberBinding="{Binding marketPrice}"/>
+                    <GridViewColumn Header="Арендная стоимость" DisplayMemberBinding="{Binding rentPrice}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <GroupBox Header="Цены кадастр/рыночная/арендная">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="kadPriceTb" Text="0"  Width="120" Margin="10 0"/>
+                    <TextBox x:Name="marketPriceTb" Text="0" Width="120" Margin="10 0"/>
+                    <TextBox x:Name="rentPriceTb" Text="0" Width="120" Margin="10 0"/>
+                </StackPanel>
+            </GroupBox>
+            <Button x:Name="editBtn" Click="editBtn_Click" Content="Изменить" Margin="20 0"/>
+            <TextBlock x:Name="countItems" VerticalAlignment="Center" Margin="20 0"/>
+        </StackPanel>
+    </Grid>
+</Window>

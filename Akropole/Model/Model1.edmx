@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище SQL_AkropoleModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BathType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adres" Type="nvarchar" MaxLength="50" />
+          <Property Name="florCount" Type="int" />
+        </EntityType>
+        <EntityType Name="Flat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idBuilding" Type="int" />
+          <Property Name="myFlor" Type="int" />
+          <Property Name="idViewType" Type="int" />
+          <Property Name="idRoomsCount" Type="int" />
+          <Property Name="idBathType" Type="int" />
+          <Property Name="bathCount" Type="int" />
+          <Property Name="condition" Type="bit" />
+          <Property Name="cadastPrice" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="marketPrice" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="rentPrice" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="idStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="Rent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idFlat" Type="int" />
+          <Property Name="dateStart" Type="date" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RoomsCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="idRole" Type="int" />
+        </EntityType>
+        <EntityType Name="ViewType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Flat_BathType">
+          <End Role="BathType" Type="Self.BathType" Multiplicity="0..1" />
+          <End Role="Flat" Type="Self.Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BathType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idBathType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_Building">
+          <End Role="Building" Type="Self.Building" Multiplicity="0..1" />
+          <End Role="Flat" Type="Self.Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Building">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_RoomsCount">
+          <End Role="RoomsCount" Type="Self.RoomsCount" Multiplicity="0..1" />
+          <End Role="Flat" Type="Self.Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomsCount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idRoomsCount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Flat" Type="Self.Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_ViewType">
+          <End Role="ViewType" Type="Self.ViewType" Multiplicity="0..1" />
+          <End Role="Flat" Type="Self.Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ViewType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idViewType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Flat">
+          <End Role="Flat" Type="Self.Flat" Multiplicity="0..1" />
+          <End Role="Rent" Type="Self.Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="idFlat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="idRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SQL_AkropoleModelContainer">
+          <EntitySet Name="BathType" EntityType="Self.BathType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Building" EntityType="Self.Building" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flat" EntityType="Self.Flat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rent" EntityType="Self.Rent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomsCount" EntityType="Self.RoomsCount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewType" EntityType="Self.ViewType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Flat_BathType" Association="Self.FK_Flat_BathType">
+            <End Role="BathType" EntitySet="BathType" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_Building" Association="Self.FK_Flat_Building">
+            <End Role="Building" EntitySet="Building" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_RoomsCount" Association="Self.FK_Flat_RoomsCount">
+            <End Role="RoomsCount" EntitySet="RoomsCount" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_Status" Association="Self.FK_Flat_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_ViewType" Association="Self.FK_Flat_ViewType">
+            <End Role="ViewType" EntitySet="ViewType" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Flat" Association="Self.FK_Rent_Flat">
+            <End Role="Flat" EntitySet="Flat" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SQL_AkropoleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SQL_AkropoleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BathType" EntityType="SQL_AkropoleModel.BathType" />
+          <EntitySet Name="Building" EntityType="SQL_AkropoleModel.Building" />
+          <EntitySet Name="Flat" EntityType="SQL_AkropoleModel.Flat" />
+          <EntitySet Name="Rent" EntityType="SQL_AkropoleModel.Rent" />
+          <EntitySet Name="Role" EntityType="SQL_AkropoleModel.Role" />
+          <EntitySet Name="RoomsCount" EntityType="SQL_AkropoleModel.RoomsCount" />
+          <EntitySet Name="Status" EntityType="SQL_AkropoleModel.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="SQL_AkropoleModel.sysdiagrams" />
+          <EntitySet Name="User" EntityType="SQL_AkropoleModel.User" />
+          <EntitySet Name="ViewType" EntityType="SQL_AkropoleModel.ViewType" />
+          <AssociationSet Name="FK_Flat_BathType" Association="SQL_AkropoleModel.FK_Flat_BathType">
+            <End Role="BathType" EntitySet="BathType" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_Building" Association="SQL_AkropoleModel.FK_Flat_Building">
+            <End Role="Building" EntitySet="Building" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_RoomsCount" Association="SQL_AkropoleModel.FK_Flat_RoomsCount">
+            <End Role="RoomsCount" EntitySet="RoomsCount" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_Status" Association="SQL_AkropoleModel.FK_Flat_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Flat_ViewType" Association="SQL_AkropoleModel.FK_Flat_ViewType">
+            <End Role="ViewType" EntitySet="ViewType" />
+            <End Role="Flat" EntitySet="Flat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rent_Flat" Association="SQL_AkropoleModel.FK_Rent_Flat">
+            <End Role="Flat" EntitySet="Flat" />
+            <End Role="Rent" EntitySet="Rent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="SQL_AkropoleModel.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BathType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Flat_BathType" FromRole="BathType" ToRole="Flat" />
+        </EntityType>
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="florCount" Type="Int32" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Flat_Building" FromRole="Building" ToRole="Flat" />
+        </EntityType>
+        <EntityType Name="Flat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idBuilding" Type="Int32" />
+          <Property Name="myFlor" Type="Int32" />
+          <Property Name="idViewType" Type="Int32" />
+          <Property Name="idRoomsCount" Type="Int32" />
+          <Property Name="idBathType" Type="Int32" />
+          <Property Name="bathCount" Type="Int32" />
+          <Property Name="condition" Type="Boolean" />
+          <Property Name="cadastPrice" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="marketPrice" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="rentPrice" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="idStatus" Type="Int32" />
+          <NavigationProperty Name="BathType" Relationship="SQL_AkropoleModel.FK_Flat_BathType" FromRole="Flat" ToRole="BathType" />
+          <NavigationProperty Name="Building" Relationship="SQL_AkropoleModel.FK_Flat_Building" FromRole="Flat" ToRole="Building" />
+          <NavigationProperty Name="RoomsCount" Relationship="SQL_AkropoleModel.FK_Flat_RoomsCount" FromRole="Flat" ToRole="RoomsCount" />
+          <NavigationProperty Name="Status" Relationship="SQL_AkropoleModel.FK_Flat_Status" FromRole="Flat" ToRole="Status" />
+          <NavigationProperty Name="ViewType" Relationship="SQL_AkropoleModel.FK_Flat_ViewType" FromRole="Flat" ToRole="ViewType" />
+          <NavigationProperty Name="Rent" Relationship="SQL_AkropoleModel.FK_Rent_Flat" FromRole="Flat" ToRole="Rent" />
+        </EntityType>
+        <EntityType Name="Rent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idFlat" Type="Int32" />
+          <Property Name="dateStart" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Rent_Flat" FromRole="Rent" ToRole="Flat" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="SQL_AkropoleModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RoomsCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Flat_RoomsCount" FromRole="RoomsCount" ToRole="Flat" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Flat_Status" FromRole="Status" ToRole="Flat" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idRole" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="SQL_AkropoleModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="ViewType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Flat" Relationship="SQL_AkropoleModel.FK_Flat_ViewType" FromRole="ViewType" ToRole="Flat" />
+        </EntityType>
+        <Association Name="FK_Flat_BathType">
+          <End Type="SQL_AkropoleModel.BathType" Role="BathType" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BathType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idBathType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_Building">
+          <End Type="SQL_AkropoleModel.Building" Role="Building" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Building">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idBuilding" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_RoomsCount">
+          <End Type="SQL_AkropoleModel.RoomsCount" Role="RoomsCount" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomsCount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idRoomsCount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_Status">
+          <End Type="SQL_AkropoleModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Flat_ViewType">
+          <End Type="SQL_AkropoleModel.ViewType" Role="ViewType" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ViewType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Flat">
+              <PropertyRef Name="idViewType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rent_Flat">
+          <End Type="SQL_AkropoleModel.Flat" Role="Flat" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.Rent" Role="Rent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rent">
+              <PropertyRef Name="idFlat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Type="SQL_AkropoleModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="SQL_AkropoleModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="idRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SQL_AkropoleModelContainer" CdmEntityContainer="SQL_AkropoleEntities">
+          <EntitySetMapping Name="BathType">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.BathType">
+              <MappingFragment StoreEntitySet="BathType">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Building">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.Building">
+              <MappingFragment StoreEntitySet="Building">
+                <ScalarProperty Name="florCount" ColumnName="florCount" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flat">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.Flat">
+              <MappingFragment StoreEntitySet="Flat">
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="rentPrice" ColumnName="rentPrice" />
+                <ScalarProperty Name="marketPrice" ColumnName="marketPrice" />
+                <ScalarProperty Name="cadastPrice" ColumnName="cadastPrice" />
+                <ScalarProperty Name="condition" ColumnName="condition" />
+                <ScalarProperty Name="bathCount" ColumnName="bathCount" />
+                <ScalarProperty Name="idBathType" ColumnName="idBathType" />
+                <ScalarProperty Name="idRoomsCount" ColumnName="idRoomsCount" />
+                <ScalarProperty Name="idViewType" ColumnName="idViewType" />
+                <ScalarProperty Name="myFlor" ColumnName="myFlor" />
+                <ScalarProperty Name="idBuilding" ColumnName="idBuilding" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rent">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.Rent">
+              <MappingFragment StoreEntitySet="Rent">
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+                <ScalarProperty Name="idFlat" ColumnName="idFlat" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomsCount">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.RoomsCount">
+              <MappingFragment StoreEntitySet="RoomsCount">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="idRole" ColumnName="idRole" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewType">
+            <EntityTypeMapping TypeName="SQL_AkropoleModel.ViewType">
+              <MappingFragment StoreEntitySet="ViewType">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
